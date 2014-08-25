@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PrestamoViewDlg" widgetVar="PrestamoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewPrestamoTitle}" closeOnEscape="true">
+
+            <h:form id="PrestamoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{prestamoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewPrestamoLabel_idPrestamo}"/>
+                        <h:outputText value="#{prestamoController.selected.idPrestamo}" title="#{myBundle.ViewPrestamoTitle_idPrestamo}"/>
+
+                        <h:outputText value="#{myBundle.ViewPrestamoLabel_quienRetira}"/>
+                        <h:outputText value="#{prestamoController.selected.quienRetira}" title="#{myBundle.ViewPrestamoTitle_quienRetira}"/>
+
+                        <h:outputText value="#{myBundle.ViewPrestamoLabel_horarioRetirada}"/>
+                        <h:outputText value="#{prestamoController.selected.horarioRetirada}" title="#{myBundle.ViewPrestamoTitle_horarioRetirada}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewPrestamoLabel_quienDevuelve}"/>
+                        <h:outputText value="#{prestamoController.selected.quienDevuelve}" title="#{myBundle.ViewPrestamoTitle_quienDevuelve}"/>
+
+                        <h:outputText value="#{myBundle.ViewPrestamoLabel_horarioDevuelto}"/>
+                        <h:outputText value="#{prestamoController.selected.horarioDevuelto}" title="#{myBundle.ViewPrestamoTitle_horarioDevuelto}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewPrestamoLabel_fecha}"/>
+                        <h:outputText value="#{prestamoController.selected.fecha}" title="#{myBundle.ViewPrestamoTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewPrestamoLabel_observaciones}"/>
+                        <h:outputText value="#{prestamoController.selected.observaciones}" title="#{myBundle.ViewPrestamoTitle_observaciones}"/>
+
+                        <h:outputText value="#{myBundle.ViewPrestamoLabel_idAulas}"/>
+                        <h:outputText value="#{prestamoController.selected.idAulas.descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewPrestamoLabel_idmotivo}"/>
+                        <h:outputText value="#{prestamoController.selected.idmotivo.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PrestamoViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

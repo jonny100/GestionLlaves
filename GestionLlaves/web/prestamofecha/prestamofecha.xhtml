@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="Prestamoporfecha">
+
+        <p:panel header="LISTA DE PRESTAMOS POR FECHA">
+           
+            <p:outputLabel value="Fecha: " for="fecha1" />            
+            <p:calendar locale="es" id="fecha1" pattern="dd/MM/yyyy" value="#{prestamoController.fecha1}" showOn="button">
+                <f:convertDateTime timeZone="America/Argentina/Buenos_Aires" pattern="dd/MM/yyyy"/>
+            </p:calendar>
+
+            <p:commandButton value="Buscar Turnos" action="#{prestamoController.obtener_prestamo_por_fecha()}">
+                <f:ajax render="datalistprestamofecha"/>
+            </p:commandButton>
+            
+            <p:dataTable id="datalistprestamofecha"
+                         value="#{prestamoController.lst_p_f}"
+                         var="item"
+                         rowKey="#{item.idPrestamo}"
+                         paginator="true"
+                         rows="20"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{prestamoController.selected}"
+                         sortBy="idPrestamo"
+                         sortOrder="descending">
+
+               
+                 <p:column sortBy="#{item.idAulas.descripcion}" filterBy="#{item.idAulas.descripcion}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListPrestamoTitle_idAulas}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idAulas.descripcion}"/>
+                                    </p:column>
+
+
+                <p:column sortBy="#{item.quienRetira}" filterBy="#{item.quienRetira}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPrestamoTitle_quienRetira}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.quienRetira}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.horarioRetirada}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPrestamoTitle_horarioRetirada}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.horarioRetirada}">
+                        <f:convertDateTime timeZone="America/Argentina/Buenos_Aires" pattern="HH:mm" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.quienDevuelve}" filterBy="#{item.quienDevuelve}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPrestamoTitle_quienDevuelve}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.quienDevuelve}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.horarioDevuelto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPrestamoTitle_horarioDevuelto}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.horarioDevuelto}">
+                        <f:convertDateTime timeZone="America/Argentina/Buenos_Aires" pattern="HH:mm" />
+                    </h:outputText>
+                </p:column>
+                
+                  <p:column sortBy="#{item.idmotivo.descripcion}" filterBy="#{item.idmotivo.descripcion}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListPrestamoTitle_idmotivo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idmotivo.descripcion}"/>
+                                    </p:column>
+                
+                
+                <p:column sortBy="#{item.observaciones}" filterBy="#{item.observaciones}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListPrestamoTitle_observaciones}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.observaciones}"/>
+                                    </p:column>
+
+
+                <p:column sortBy="#{item.fecha}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPrestamoTitle_fecha}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fecha}">
+                        <f:convertDateTime timeZone="America/Argentina/Buenos_Aires" pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+                
+                                    
+                
+                
+                                  
+                
+                
+                                  
+               
+
+            </p:dataTable>
+
+            
+            <p:commandButton value="Imprimir" type="button" icon="ui-icon-print">
+                <p:printer target="datalistprestamofecha"/>
+            </p:commandButton>
+           
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

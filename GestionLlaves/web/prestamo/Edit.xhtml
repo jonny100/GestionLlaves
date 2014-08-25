@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="PrestamoEditDlg" widgetVar="PrestamoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditPrestamoTitle}" closeOnEscape="true">
+
+            <h:form id="PrestamoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{prestamoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditPrestamoLabel_idPrestamo}" for="idPrestamo" />
+                        <h:outputText id="idPrestamo" value="#{prestamoController.selected.idPrestamo}" />
+
+                        <p:outputLabel value="#{myBundle.EditPrestamoLabel_quienRetira}" for="quienRetira" />
+                        <p:inputText id="quienRetira" value="#{prestamoController.selected.quienRetira}" title="#{myBundle.EditPrestamoTitle_quienRetira}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditPrestamoLabel_horarioRetirada}" for="horarioRetirada" />
+                        <p:calendar id="horarioRetirada" pattern="HH:mm:ss" value="#{prestamoController.selected.horarioRetirada}" title="#{myBundle.EditPrestamoTitle_horarioRetirada}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditPrestamoLabel_quienDevuelve}" for="quienDevuelve" />
+                        <p:inputText id="quienDevuelve" value="#{prestamoController.selected.quienDevuelve}" title="#{myBundle.EditPrestamoTitle_quienDevuelve}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditPrestamoLabel_horarioDevuelto}" for="horarioDevuelto" />
+                        <p:calendar id="horarioDevuelto" pattern="HH:mm:ss" value="#{prestamoController.selected.horarioDevuelto}" title="#{myBundle.EditPrestamoTitle_horarioDevuelto}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditPrestamoLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{prestamoController.selected.fecha}" title="#{myBundle.EditPrestamoTitle_fecha}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditPrestamoLabel_observaciones}" for="observaciones" />
+                        <p:inputText id="observaciones" value="#{prestamoController.selected.observaciones}" title="#{myBundle.EditPrestamoTitle_observaciones}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditPrestamoLabel_idAulas}" for="idAulas" />
+                        <p:selectOneMenu id="idAulas" value="#{prestamoController.selected.idAulas}"  converter="aulasConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{aulasController.items}"
+                                           var="idAulasItem"
+                                           itemValue="#{idAulasItem}"
+                                           itemLabel="#{idAulasItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditPrestamoLabel_idmotivo}" for="idmotivo" />
+                        <p:selectOneMenu id="idmotivo" value="#{prestamoController.selected.idmotivo}"  converter="motivoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{motivoController.items}"
+                                           var="idmotivoItem"
+                                           itemValue="#{idmotivoItem}"
+                                           itemLabel="#{idmotivoItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{prestamoController.save}" value="#{myBundle.Save}" update="display,:PrestamoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PrestamoEditDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PrestamoEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

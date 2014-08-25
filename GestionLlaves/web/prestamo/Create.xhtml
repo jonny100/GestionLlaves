@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PrestamoCreateDlg" widgetVar="PrestamoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreatePrestamoTitle}" closeOnEscape="true">
+
+            <h:form id="PrestamoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{prestamoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+                        
+                        <p:outputLabel value="#{myBundle.CreatePrestamoLabel_idAulas}" for="idAulas" />
+                        <p:selectOneMenu id="idAulas" value="#{prestamoController.selected.idAulas}"  converter="aulasConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{aulasController.items}"
+                                           var="idAulasItem"
+                                           itemValue="#{idAulasItem}"
+                                           itemLabel="#{idAulasItem.descripcion.toString()}"
+                                           />
+                            </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreatePrestamoLabel_quienRetira}" for="quienRetira" />
+                        <p:inputText id="quienRetira" value="#{prestamoController.selected.quienRetira}" title="#{myBundle.CreatePrestamoTitle_quienRetira}" size="45" maxlength="45"/>
+
+                        
+                        
+                        <p:outputLabel value="#{myBundle.CreatePrestamoLabel_idmotivo}" for="idmotivo" />
+                        <p:selectOneMenu id="idmotivo" value="#{prestamoController.selected.idmotivo}"  converter="motivoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{motivoController.items}"
+                                           var="idmotivoItem"
+                                           itemValue="#{idmotivoItem}"
+                                           itemLabel="#{idmotivoItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="#{myBundle.CreatePrestamoLabel_observaciones}" for="observaciones" />
+                        <p:inputText id="observaciones" value="#{prestamoController.selected.observaciones}" title="#{myBundle.CreatePrestamoTitle_observaciones}" size="45" maxlength="45"/>
+
+                        
+
+                        
+
+                        
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{prestamoController.saveNew}" value="#{myBundle.Save}" update="display,:PrestamoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PrestamoCreateDialog);">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PrestamoCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
+
